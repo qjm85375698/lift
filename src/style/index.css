@@ -1,0 +1,45 @@
+/* 初始化 */
+body,button,dd,div,dl,dt,form,h1,h2,h3,h4,h5,h6,html,iframe,input,li,ol,p,select,table,td,textarea,th,ul {
+    margin: 0;
+    padding: 0
+}
+/* 数码字体 */
+@font-face {
+    font-family: led regular;
+    src: url('DS-DIGI.ttf') format('truetype');
+}
+/* 上滑 */
+@keyframes upMove{
+    from {top:0px;}
+    to {top:100%;}
+}
+/* 下滑 */
+@keyframes downMove{
+    from {top:100%;}
+    to {top:0;}
+}
+/* 一闪一闪 */
+@keyframes flash{
+    from {opacity: 100%;}
+    to {opacity:0;}
+}
+/* 关左门 */
+@keyframes closeLeftDoor{
+    from {left: -100%;}
+    to {left:0;}
+}
+/* 关右门 */
+@keyframes closeRightDoor{
+    from {right: -100%;}
+    to {right:0;}
+}
+/* 开左门 */
+@keyframes openLeftDoor{
+    from {left: 0%;}
+    to {left:-100%;}
+}
+/* 开右门 */
+@keyframes openRightDoor{
+    from {right: 0%;}
+    to {right:-100%;}
+}

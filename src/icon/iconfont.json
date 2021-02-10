@@ -1,0 +1,44 @@
+{
+  "id": "2371085",
+  "name": "lift",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1190472",
+      "name": "up",
+      "font_class": "up1",
+      "unicode": "e8d7",
+      "unicode_decimal": 59607
+    },
+    {
+      "icon_id": "1190751",
+      "name": "down",
+      "font_class": "down1",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "11736996",
+      "name": "height",
+      "font_class": "height",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "17412853",
+      "name": "Temperature",
+      "font_class": "Temperature",
+      "unicode": "e6f8",
+      "unicode_decimal": 59128
+    },
+    {
+      "icon_id": "19218799",
+      "name": "371pressure",
+      "font_class": "371pressure",
+      "unicode": "e74b",
+      "unicode_decimal": 59211
+    }
+  ]
+}
