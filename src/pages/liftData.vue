@@ -255,9 +255,10 @@ export default {
 <style lang="less">
 .liftData{
     padding: 30px 0;
-    width: 700px;
+    width: 768px;
+    height: 456px;
     background-color:darkCyan;
-    border-radius: 60px;
+    // border-radius: 60px;
     position: relative;
     overflow: hidden;
     .leftRoad{
@@ -300,10 +301,10 @@ export default {
         animation:downMove 3s infinite linear;
     }
     .infoBox{
-        height: 330px;
-        width: 600px;
-        border: 2px solid white;
-        border-radius: 40px;
+        height: 400px;
+        width: 700px;
+        border: 5px solid white;
+        // border-radius: 40px;
         margin: 20px auto;
         padding: 0 10px;
         color: white;
@@ -330,6 +331,7 @@ export default {
                 &>div{
                     height: 46px;
                     line-height: 46px;
+                    text-align: left;
                 }
             }
         }
@@ -365,23 +367,23 @@ export default {
             height: 127px;
             width: 30%;
             .label{
-                width: 60%;
+                width: 70%;
                 float: left;
                 &>div{
-                    font-size: 16px;
+                    font-size: 18px;
                     text-align: left;
-                    height: 30px;
-                    line-height: 30px;
+                    height: 34px;
+                    line-height: 34px;
                 }
             }
             .value{
-                width: 40%;
+                width: 30%;
                 float: left;
                 &>div{
-                    font-size: 16px;
+                    font-size: 18px;
                     text-align: left;
-                    height: 30px;
-                    line-height: 30px;
+                    height: 34px;
+                    line-height: 34px;
                 }
             }
         }
@@ -392,7 +394,7 @@ export default {
             height: 87px;
             text-align: center;
             .lineInner{
-                height: 100%;
+                height: 150%;
                 width: 4px;
                 background-color: white;
                 display: inline-block;
@@ -400,23 +402,23 @@ export default {
             }
         }
         .xLine{
-            height: 2px;
+            height: 3px;
             position: absolute;
-            width: 600px;
+            width: 700px;
             background: white;
-            top: 230px;
+            top: 250px;
         }
     }
     .statusInfo{
         .status{
             float: left;
             height: 127px;
-            padding: 20px 0;
+            padding: 50px 0;
             width: 30%;
             .label{
                 width: 50%;
                 float: left;
-                font-size: 16px;
+                font-size: 18px;
                 &>div{
                     height: 36px;
                     line-height: 36px;
@@ -425,7 +427,7 @@ export default {
             .value {
                 width: 50%;
                 float: left;
-                font-size: 16px;
+                font-size: 18px;
                 &>div{
                     text-align: left;
                     height: 36px;
@@ -437,7 +439,7 @@ export default {
             float: left;
             height: 127px;
             width: 30%;
-            padding: 20px 0;
+            padding: 60px 0;
             >div{
                 width: 50%;
                 float: left;
@@ -456,7 +458,7 @@ export default {
         }
         .angleInfo{
             float: left;
-            padding: 20px 0;
+            padding: 50px 0;
             width: 30%;
             height: 127px;
             color: white;

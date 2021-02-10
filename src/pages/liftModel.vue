@@ -18,9 +18,9 @@
             </div>
             <div class="importantInfo">
                 <div class="runInfo">
-                    <div class="floor" v-if="liftData.DQFWMS === '1'">{{liftData.DQLC}}</div>
-                    <div class="check" v-if="liftData.DQFWMS === '2'"><img src="@/assets/check.png"> </div>
-                    <div class="stop" v-if="liftData.DQFWMS === '3'"><img src="@/assets/stop.png"> </div>
+                    <div class="floor" v-if="serveMode === '1'">{{liftData.DQLC}}</div>
+                    <div class="check" v-if="serveMode === '2'"><img src="@/assets/check.png"> </div>
+                    <div class="stop" v-if="serveMode === '3'"><img src="@/assets/stop.png"> </div>
                 </div>
             </div>
             <div class='line'>
@@ -32,14 +32,12 @@
                     <div>累计开门次数:</div>
                     <div>累计运行距离:</div>
                     <div>钢丝折弯次数:</div>
-                    <!-- <div>累计运行时间:</div> -->
                 </div>
                 <div class="value">
                     <div id="LJYXCS">{{liftData.LJYXCS}}</div>
                     <div id="KMCS">{{liftData.KMCS}}</div>
                     <div id="LJYXJL">{{liftData.LJYXJL}}</div>
                     <div id="GSWZCS">{{liftData.GSWZCS}}</div>
-                    <!-- <div id="DTLJYXSJ">{{liftData.DTLJYXSJ}}</div> -->
                 </div>
             </div>
         </div>
@@ -104,7 +102,7 @@ export default {
     name: 'liftModel',
     data() {
         return {
-            serveMode: 1,
+            serveMode: '1',
             liftData: {
                 DQFWMS: '正常运行', // 当前服务模式
                 JXYXZT: '运行', // 轿厢运行状态
@@ -121,7 +119,6 @@ export default {
                 XJD: '0°', // X角度
                 YJD: '0°', // Y角度
                 ZJD: '0°', // Z角度
-                DTLJYXSJ: '100s', // 累计运行时间
                 JXJDWD: '25℃' // 轿厢温度
             },
             socket: null            
@@ -285,9 +282,10 @@ export default {
 <style lang="less">
 .liftModel{
     padding: 30px 0;
-    width: 700px;
+    width: 768px;
+    // height: 456px;
     background-color:darkCyan;
-    border-radius: 60px;
+    // border-radius: 60px;
     position: relative;
     overflow: hidden;
     .leftRoad{
@@ -331,7 +329,7 @@ export default {
         height: 167px;
         width: 600px;
         border: 2px solid white;
-        border-radius: 40px;
+        // border-radius: 40px;
         margin: 20px auto;
         padding: 0 10px;
         color: white;
@@ -394,21 +392,23 @@ export default {
             height: 127px;
             width: 30%;
             .label{
-                width: 60%;
+                width: 70%;
                 float: left;
                 &>div{
+                    font-size: 18px;
                     text-align: left;
-                    height: 24px;
-                    line-height: 24px;
+                    height: 34px;
+                    line-height: 34px;
                 }
             }
             .value{
-                width: 40%;
+                width: 30%;
                 float: left;
                 &>div{
+                    font-size: 18px;
                     text-align: left;
-                    height: 24px;
-                    line-height: 24px;
+                    height: 34px;
+                    line-height: 34px;
                 }
             }
         }
