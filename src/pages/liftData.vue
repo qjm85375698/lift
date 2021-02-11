@@ -173,7 +173,8 @@ export default {
         },
         error() {
             console.log("连接错误");
-
+            //释放资源
+            this.socket.close();
         },
         getMessage(msg) {
             console.log(msg.data);
@@ -228,7 +229,7 @@ export default {
         close () {
             console.log("socket已经关闭");
             //释放资源
-
+            this.socket.close();
         }
     }
 }
