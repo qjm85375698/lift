@@ -68,7 +68,7 @@
                     <div v-if="liftData.JXYXFX === '0'" class="twoLine">
                         <i class="iconfont icon-equals"></i>       
                     </div>
-                    <div v-if="liftData.JXYXFX === '1'" :class="[liftData.JXYXFX === '1'? 'active':'']"> -->
+                    <div v-if="liftData.JXYXFX === '1'" :class="[liftData.JXYXFX === '1'? 'active':'']"> 
                         <i class="iconfont icon-Up-"></i>
                     </div>
                     <div v-if="liftData.JXYXFX === '2'" :class="[liftData.JXYXFX === '2'? 'active':'']">
@@ -143,7 +143,8 @@ export default {
                 
                 // 实例化socket
                 //this.socket = new WebSocket("ws://134.175.201.123:8879/message");
-                this.socket = new WebSocket("ws://134.175.201.123:8879/message");
+                // this.socket = new WebSocket("ws://134.175.201.123:8879/message");
+                this.socket = new WebSocket("ws://localhost:8081/message");
                 //this.socket = new WebSocket("ws://10.100.30.130:8080/message");
                 // 监听socket连接
                 this.socket.onopen = this.open
@@ -151,6 +152,7 @@ export default {
                 this.socket.onerror = this.error
                 // 监听socket消息
                 this.socket.onmessage = this.getMessage
+                //this.socket.onclose=this.close;
             }
         },
         open() {
@@ -173,8 +175,7 @@ export default {
         },
         error() {
             console.log("连接错误");
-            //释放资源
-            this.socket.close();
+            this.socket.close;
         },
         getMessage(msg) {
             console.log(msg.data);
@@ -182,12 +183,10 @@ export default {
             for (var x = 0; x < msgData.length; x++) {
                 Object.keys(this.liftData).forEach(key => {
                     if(msgData[x].code === key){
-                        if(msgData[x].code==='XJD'|| msgData[x].code==='YJD'|| msgData[x].code==='ZJD'
-                        ||msgData[x].code==='DQYL'|| msgData[x].code==='DQGD'|| msgData[x].code==='JXJDWD'){
+                        if(msgData[x].code==='XJD'|| msgData[x].code==='YJD'|| msgData[x].code==='ZJD'){
                             this.liftData[key] = (msgData[x].value).toFixed(2) +msgData[x].unit;
                         
-                        }
-                        else{
+                        }else{
                             // 这个会将所有的非字符变成字符
                             this.liftData[key] = msgData[x].value + (msgData[x].unit? msgData[x].unit: '');
                         }
@@ -229,7 +228,12 @@ export default {
         close () {
             console.log("socket已经关闭");
             //释放资源
-            this.socket.close();
+
+            setTimeout(() =>{
+                console.log('正在尝试重连。。。');
+                this.initSocket();
+            },5000);
+
         }
     }
 }

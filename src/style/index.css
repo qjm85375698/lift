@@ -25,13 +25,13 @@ body,button,dd,div,dl,dt,form,h1,h2,h3,h4,h5,h6,html,iframe,input,li,ol,p,select
 }
 /* 关左门 */
 @keyframes closeLeftDoor{
-    from {left: -100%;}
-    to {left:0;}
+    from {left: -174px;}
+    to {left:-87px;}
 }
 /* 关右门 */
 @keyframes closeRightDoor{
-    from {right: -100%;}
-    to {right:0;}
+    from {right: -174px;}
+    to {right:-87px;}
 }
 /* 开左门 */
 @keyframes openLeftDoor{

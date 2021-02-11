@@ -18,9 +18,9 @@
             </div>
             <div class="importantInfo">
                 <div class="runInfo">
-                    <div class="floor" v-if="serveMode === '1'">{{liftData.DQLC}}</div>
-                    <div class="check" v-if="serveMode === '2'"><img src="@/assets/check.png"> </div>
-                    <div class="stop" v-if="serveMode === '3'"><img src="@/assets/stop.png"> </div>
+                    <div class="floor" v-if="liftData.DQFWMS === '1'">{{liftData.DQLC}}</div>
+                    <div class="stop" v-if="liftData.DQFWMS === '2'"><img src="@/assets/stop.png"> </div>
+                    <div class="check" v-if="liftData.DQFWMS === '3'"><img src="@/assets/check.png"> </div>
                 </div>
             </div>
             <div class='line'>
@@ -102,9 +102,8 @@ export default {
     name: 'liftModel',
     data() {
         return {
-            serveMode: '1',
             liftData: {
-                DQFWMS: '正常运行', // 当前服务模式
+                DQFWMS: '1', // 当前服务模式
                 JXYXZT: '运行', // 轿厢运行状态
                 JXYXFX: '1', // 轿厢运行方向
                 DQLC: '7', // 当前楼层
@@ -173,32 +172,14 @@ export default {
         error() {
             console.log("连接错误")
         },
-        // 服务模式发生了改变
-        modelChange() {
-            // if (this.serveMode === '1') {
-
-            // } else (this.serveMode === '2'){
-
-            // } else (this.serveMode === '3'){
-
-            // }
-        },
         getMessage(msg) {
-            // if (msg && msg.data && msg.data.indexOf('}') !== -1) {
-            //     let msgData = JSON.parse(msg.data);
-            //     if (msgData.DQFWMS && msgData.DQFWMS !== this.serveMode) {
-            //         this.serveMode = msgData.DQFWMS;
-            //         this.modelChange();
-            //     }
-            //     this.liftData = {...this.liftData, ...msgData}
-            // }
-
             console.log(msg.data);
             let msgData = JSON.parse(msg.data);
             for (var x = 0; x < msgData.length; x++) {
                 Object.keys(this.liftData).forEach(key => {
                     if(msgData[x].code === key){
-                        if(msgData[x].code==='XJD'|| msgData[x].code==='YJD'|| msgData[x].code==='ZJD'){
+                        if(msgData[x].code==='XJD'|| msgData[x].code==='YJD'|| msgData[x].code==='ZJD'
+                        ||msgData[x].code==='DQYL'|| msgData[x].code==='DQGD'|| msgData[x].code==='JXJDWD'){
                             this.liftData[key] = (msgData[x].value).toFixed(2) +msgData[x].unit;
                         
                         }else{
@@ -206,69 +187,9 @@ export default {
                         }
                         
                     }
-
-                    // //JXYXZT 轿厢运行状态
-                    // if (msgData[x].code==='JXYXZT') {
-                    //     let match = false;
-                    //     jxyxztMap.forEach(map => {
-                    //         if (map.key === msgData[x].value) {
-                    //             msgData.JXYXZT = map.value;
-                    //             match = true;
-                    //         }
-                    //     })
-                    //     if (!match) {
-                    //         msgData.JXYXZT = '未知';
-                    //     }
-                        
-                    // }
-                    // //JXYXFX 轿厢运行方向
-                    // if (msgData[x].code==='JXYXFX') {
-                    //     this.direction = msgData[x].value;
-                    //     // jxyxfxMap.forEach(map => {
-                    //     //     if (map.key === msgData[x].value) {
-                    //     //         msgData.JXYXFX = map.value;
-                    //     //     }
-                    //     // })
-                    // }
-                    // //JMZT 轿门状态
-                    // if (msgData[x].code==='JMZT') {
-                    //     let match = false;
-                    //     jmztMap.forEach(map => {
-                    //         if (map.key === msgData[x].value) {
-                    //             msgData.JMZT = map.value;
-                    //             match = true;
-                    //         }
-                    //     })
-                    //     if (!match) {
-                    //         msgData.JMZT = '未知';
-                    //     }
-                        
-                    // }
-
                 });
                 
             }
-            
-            if (msg && msg.data && msg.data.indexOf('}') !== -1) {
-                //let msgData = JSON.parseArray(msg.data);
-                //DQFWMS 当前服务模式
-                // if (msgData.DQFWMS) {
-                //     DQFWMSMap.forEach(map => {
-                //        if (map.key === msgData.DQFWMS) {
-                //           msgData.DQFWMS = map.value;
-                //        }
-                //     })
-                // }
-
-                
-                
-                this.liftData = {...this.liftData, ...msgData}
-            }
-
-
-
-
-
         },    
         send(msg) {
             this.socket.send(msg)
@@ -284,7 +205,7 @@ export default {
     padding: 30px 0;
     width: 768px;
     // height: 456px;
-    background-color:darkCyan;
+    background-color: #12018B;
     // border-radius: 60px;
     position: relative;
     overflow: hidden;
@@ -531,7 +452,7 @@ export default {
                     z-index: 1;
                     height: 34px;
                     padding: 2px;
-                    background-color: darkCyan;
+                    background-color: #12018B;
                     border-radius: 10px;
                     color: white;
                     font-family: "led regular";
