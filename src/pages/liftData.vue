@@ -301,9 +301,9 @@ export default {
         animation:downMove 3s infinite linear;
     }
     .infoBox{
-        height: 400px;
+        height: 430px;
         width: 700px;
-        border: 5px solid white;
+        border: 3px solid white;
         // border-radius: 40px;
         margin: 20px auto;
         padding: 0 10px;
@@ -390,7 +390,7 @@ export default {
         .line{
             margin: 40px 0; 
             float: left;
-            width: 5%;
+            width: 3%;
             height: 87px;
             text-align: center;
             .lineInner{
@@ -413,12 +413,12 @@ export default {
         .status{
             float: left;
             height: 127px;
-            padding: 50px 0;
+            padding: 60px 0;
             width: 30%;
             .label{
                 width: 50%;
                 float: left;
-                font-size: 18px;
+                font-size: 20px;
                 &>div{
                     height: 36px;
                     line-height: 36px;
@@ -469,6 +469,7 @@ export default {
                 margin: 6px;
             }
             .item{
+                width: 10px;
                 height: 28px;
                 line-height: 28px;
             }
