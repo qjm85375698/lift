@@ -1,56 +1,59 @@
 <template>
     <div class="liftData">
+        <div class='header'>电梯运行状态</div>
         <div class='infoBox'>
-            <div class='currentInfo'>
-                <div class='label'>
-                    <div><i class="iconfont icon-371pressure"></i></div>
-                    <div><i class="iconfont icon-height"></i></div>
-					<div><i class="iconfont icon-Temperature"></i></div>
+            <div class='row1'>
+                <div class='currentInfo'>
+                    <div class='label'>
+                        <div><i class="iconfont icon-371pressure"></i></div>
+                        <div><i class="iconfont icon-height"></i></div>
+                        <div><i class="iconfont icon-Temperature"></i></div>
+                    </div>
+                    <div class='value'>
+                        <div id="DQYL">{{liftData.DQYL}}</div>
+                        <div id="DQGD">{{liftData.DQGD}}</div>
+                        <div id="JXJDWD">{{liftData.JXJDWD}}</div>
+                    </div>
                 </div>
-                <div class='value'>
-                    <div id="DQYL">{{liftData.DQYL}}</div>
-					<div id="DQGD">{{liftData.DQGD}}</div>
-                    <div id="JXJDWD">{{liftData.JXJDWD}}</div>
+                <div class="line">
+                    <div class="lineInner"></div>
                 </div>
-            </div>
-            <div class="line">
-                <div class="lineInner"></div>
-            </div>
-            <div class="importantInfo">
-                <div class="runInfo">
-                    <div class="floor" v-if="liftData.DQFWMS === '1'">{{liftData.DQLC}}</div>
-                    <div class="stop" v-if="liftData.DQFWMS === '2'"><img src="@/assets/stop.png"> </div>
-                    <div class="check" v-if="liftData.DQFWMS === '3'"><img src="@/assets/check.png"> </div>
-                    
+                <div class="importantInfo">
+                    <div class="runInfo">
+                        <div class="floor" v-if="liftData.DQFWMS === '1'">{{liftData.DQLC}}</div>
+                        <div class="stop" v-if="liftData.DQFWMS === '2'"><img src="@/assets/stop.png"> </div>
+                        <div class="check" v-if="liftData.DQFWMS === '3'"><img src="@/assets/check.png"> </div>
+                        
+                    </div>
                 </div>
-            </div>
-            <div class='line'>
-                <div class="lineInner"></div>
-            </div>
-            <div class="historyInfo">
-                <div class='label'>
-                    <div>累计运行次数:</div>
-                    <div>累计开门次数:</div>
-                    <div>累计运行距离:</div>
-                    <div>钢丝折弯次数:</div>
-                    <!-- <div>累计运行时间:</div> -->
+                <div class='line'>
+                    <div class="lineInner"></div>
                 </div>
-                <div class="value">
-                    <div id="LJYXCS">{{liftData.LJYXCS}}</div>
-                    <div id="KMCS">{{liftData.KMCS}}</div>
-                    <div id="LJYXJL">{{liftData.LJYXJL}}</div>
-                    <div id="GSWZCS">{{liftData.GSWZCS}}</div>
-                    <!-- <div id="DTLJYXSJ">{{liftData.DTLJYXSJ}}</div> -->
+                <div class="historyInfo">
+                    <div class='label'>
+                        <div>累计运行次数:</div>
+                        <div>累计开门次数:</div>
+                        <div>累计运行距离:</div>
+                        <div>钢丝折弯次数:</div>
+                        <!-- <div>累计运行时间:</div> -->
+                    </div>
+                    <div class="value">
+                        <div id="LJYXCS">{{liftData.LJYXCS}}</div>
+                        <div id="KMCS">{{liftData.KMCS}}</div>
+                        <div id="LJYXJL">{{liftData.LJYXJL}}</div>
+                        <div id="GSWZCS">{{liftData.GSWZCS}}</div>
+                        <!-- <div id="DTLJYXSJ">{{liftData.DTLJYXSJ}}</div> -->
+                    </div>
                 </div>
             </div>
             <div class='xLine'>
             </div>
-            <div class='statusInfo'>
+            <div class='row2'>
                 <div class="status">
                     <div class="label">
-                        <div>运行状态</div>
-                        <div>轿门状态</div>
-                        <div>当前速度</div>
+                        <div>运行状态:</div>
+                        <div>轿门状态:</div>
+                        <div>当前速度:</div>
                     </div>
                     <div class="value">
                         <div>{{liftData.JXYXZT}}</div>
@@ -62,9 +65,15 @@
                     <div class="lineInner"></div>
                 </div>
                 <div class="direction">
-                    <div :class="[direction === 1? 'active':'']"><i class="iconfont icon-up1"></i></div>
-                    <div :class="[direction === 2? 'active':'']"><i class="iconfont icon-down1"></i></div>
-                    
+                    <div v-if="liftData.JXYXFX === '0'" class="twoLine">
+                        <i class="iconfont icon-equals"></i>       
+                    </div>
+                    <div v-if="liftData.JXYXFX === '1'" :class="[liftData.JXYXFX === '1'? 'active':'']"> -->
+                        <i class="iconfont icon-Up-"></i>
+                    </div>
+                    <div v-if="liftData.JXYXFX === '2'" :class="[liftData.JXYXFX === '2'? 'active':'']">
+                        <i class="iconfont icon-Down-"></i>
+                    </div>
                 </div>
                 <div class="line">
                     <div class="lineInner"></div>
@@ -91,18 +100,17 @@
     </div>
 </template>
 <script>
-import {dqfwmsMap, jxyxztMap, jxyxfxMap, jmztMap} from '@/utils';
+import {jxyxztMap, jmztMap} from '@/utils';
 export default {
     name: 'liftData',
     data() {
         return {
-            direction: 0,
             liftData: {
                 DQFWMS: '1', // 当前服务模式
                 JXYXZT: '运行', // 轿厢运行状态
-                JXYXFX: '无方向', // 轿厢运行方向
+                JXYXFX: '0', // 轿厢运行方向
                 DQLC: '7', // 当前楼层
-                JMZT: '1', // 轿门状态
+                JMZT: '不完全关闭', // 轿门状态
                 LJYXCS: '1945', // 累计运行次数
                 KMCS: '1945', // 累计开门次数
                 LJYXJL: '1945cm', // 累计运行距离
@@ -177,67 +185,38 @@ export default {
                             this.liftData[key] = (msgData[x].value).toFixed(2) +msgData[x].unit;
                         
                         }else{
+                            // 这个会将所有的非字符变成字符
                             this.liftData[key] = msgData[x].value + (msgData[x].unit? msgData[x].unit: '');
                         }
-                        
                     }
-
-                    //JXYXZT 轿厢运行状态
-                    if (msgData[x].code==='JXYXZT') {
-                        let match = false;
-                        jxyxztMap.forEach(map => {
-                            if (map.key === msgData[x].value) {
-                                msgData.JXYXZT = map.value;
-                                match = true;
-                            }
-                        })
-                        if (!match) {
-                            msgData.JXYXZT = '未知';
+                })
+                //JXYXZT 轿厢运行状态
+                if (msgData[x].code==='JXYXZT') {
+                    let match = false;
+                    jxyxztMap.forEach(map => {
+                        if (map.key === this.liftData.JXYXZT) {
+                            this.liftData.JXYXZT = map.value;
+                            match = true;
                         }
-                        
+                    })
+                    if (!match) {
+                        this.liftData.JXYXZT = '未知';
                     }
-                    //JXYXFX 轿厢运行方向
-                    if (msgData[x].code==='JXYXFX') {
-                        this.direction = msgData[x].value;
-                        // jxyxfxMap.forEach(map => {
-                        //     if (map.key === msgData[x].value) {
-                        //         msgData.JXYXFX = map.value;
-                        //     }
-                        // })
-                    }
-                    //JMZT 轿门状态
-                    if (msgData[x].code==='JMZT') {
-                        let match = false;
-                        jmztMap.forEach(map => {
-                            if (map.key === msgData[x].value) {
-                                msgData.JMZT = map.value;
-                                match = true;
-                            }
-                        })
-                        if (!match) {
-                            msgData.JMZT = '未知';
+                }
+                //JMZT 轿门状态
+                if (msgData[x].code==='JMZT') {
+                    let match = false;
+                    jmztMap.forEach(map => {
+                        if (map.key === this.liftData.JMZT) {
+                            this.liftData.JMZT = map.value;
+                            match = true;
                         }
-                        
+                    })
+                    if (!match) {
+                        this.liftData.JMZT = '未知';
                     }
-
-                });
-                
-            }
-            
-            if (msg && msg.data && msg.data.indexOf('}') !== -1) {
-                //let msgData = JSON.parseArray(msg.data);
-                //DQFWMS 当前服务模式
-                // if (msgData.DQFWMS) {
-                //     DQFWMSMap.forEach(map => {
-                //        if (map.key === msgData.DQFWMS) {
-                //           msgData.DQFWMS = map.value;
-                //        }
-                //     })
-                // }
-
-                
-                
-                this.liftData = {...this.liftData, ...msgData}
+                    
+                }
             }
         },    
         send(msg) {
@@ -254,96 +233,72 @@ export default {
 </script>
 <style lang="less">
 .liftData{
-    padding: 30px 0;
     width: 768px;
-    height: 456px;
-    background-color:darkCyan;
-    // border-radius: 60px;
+    height: 436px;
+    padding-bottom: 20px;
+    background-color:#12018B;
     position: relative;
     overflow: hidden;
-    .leftRoad{
-        position: absolute;
-        top: 58px;
-        left: 0;
-        width: 2px;
-        height: 100%;
-        background-color: #EDBD65;
-        .block{
-            display: none;
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            top: 0;
-            background-color: #EDBD65;
-        }
-    }
-    .rightRoad{
-        position: absolute;
-        background-color: #EDBD65;
-        top: 58px;
-        right: 0;
-        width: 2px;
-        height: 100%;
-        .block{
-            display: none;
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            top: 0;
-            right: 0;
-            background-color: #EDBD65;
-        }
-    }
-    .block.upMove{
-        animation:upMove 3s infinite linear;
-    }
-    .block.downMove{
-        animation:downMove 3s infinite linear;
+    .header {
+        height: 50px;
+        width: 100%;
+        text-align: center;
+        line-height: 50px;
+        color: white;
+        font-size: 20px;
     }
     .infoBox{
-        height: 430px;
+        height: 376px;
         width: 700px;
-        border: 3px solid white;
-        // border-radius: 40px;
-        margin: 20px auto;
+        border: 5px solid white;
+        position: relative;
+        margin: 0 auto;
         padding: 0 10px;
         color: white;
+        .row1,.row2{
+            height: 50%;
+            width: 100%;
+            position: relative;
+            .line{
+                height: 106px;
+            }
+        }
         .currentInfo {
             float: left;
-            height: 127px;
+            height: 146px;
             width: 30%;
             padding: 20px 0;
             .label{
                 width: 20%;
                 float: left;
                 i{
-                    font-size: 26px;
+                    font-size: 28px;
                 }
                 &>div{
-                    height: 46px;
-                    line-height: 46px;
+                    height: 49px;
+                    line-height: 49px;
                 }
             }
             .value {
                 width: 80%;
                 float: left;
-                font-size: 24px;
+                font-size: 28px;
                 &>div{
-                    height: 46px;
-                    line-height: 46px;
+                    height: 49px;
+                    line-height: 49px;
                     text-align: left;
                 }
             }
         }
         .importantInfo{
             float: left;
-            height: 127px;
+            height: 146px;
             width: 30%;
             padding: 20px 0;
             .runInfo{
                 height: 100%;
                 .floor{
-                    line-height: 127px;
+                    line-height: 146px;
                     font-family: 'led regular';
                     font-size: 90px;
                     height: 100%;
@@ -364,37 +319,37 @@ export default {
         .historyInfo{
             float: left;
             padding: 20px 0;
-            height: 127px;
+            height: 146px;
             width: 30%;
             .label{
                 width: 70%;
                 float: left;
                 &>div{
-                    font-size: 18px;
+                    font-size: 20px;
                     text-align: left;
-                    height: 34px;
-                    line-height: 34px;
+                    height: 36px;
+                    line-height: 36px;
                 }
             }
             .value{
                 width: 30%;
                 float: left;
                 &>div{
-                    font-size: 18px;
+                    font-size: 20px;
                     text-align: left;
-                    height: 34px;
-                    line-height: 34px;
+                    height: 36px;
+                    line-height: 36px;
                 }
             }
         }
         .line{
             margin: 40px 0; 
             float: left;
-            width: 3%;
-            height: 87px;
+            width: 5%;
+            height: 124px;
             text-align: center;
             .lineInner{
-                height: 150%;
+                height: 100%;
                 width: 4px;
                 background-color: white;
                 display: inline-block;
@@ -402,84 +357,83 @@ export default {
             }
         }
         .xLine{
-            height: 3px;
+            height: 4px;
             position: absolute;
             width: 700px;
             background: white;
-            top: 250px;
+            top: 186px;
+            border-radius: 4px;
         }
     }
-    .statusInfo{
-        .status{
+    .status{
+        float: left;
+        height: 146px;
+        padding: 20px 0;
+        width: 30%;
+        .label{
+            width: 50%;
             float: left;
-            height: 127px;
-            padding: 60px 0;
-            width: 30%;
-            .label{
-                width: 50%;
-                float: left;
-                font-size: 20px;
-                &>div{
-                    height: 36px;
-                    line-height: 36px;
-                }
-            }
-            .value {
-                width: 50%;
-                float: left;
-                font-size: 18px;
-                &>div{
-                    text-align: left;
-                    height: 36px;
-                    line-height: 36px;
-                }
+            font-size: 20px;
+            &>div{
+                height: 49px;
+                line-height: 49px;
             }
         }
-        .direction{
+        .value {
+            width: 50%;
             float: left;
-            height: 127px;
-            width: 30%;
-            padding: 60px 0;
-            >div{
-                width: 50%;
-                float: left;
-                height: 127px;
-                line-height: 127px;
-                i{
-                    font-size: 100px;
-                }
-            }
-            .active{
-                i{
-                    color: red;
-                    animation:flash 1s infinite linear;
-                }
+            font-size: 20px;
+            &>div{
+                text-align: left;
+                height: 49px;
+                line-height: 49px;
             }
         }
-        .angleInfo{
+    }
+    .direction{
+        float: left;
+        height: 146px;
+        width: 30%;
+        padding: 20px 0;
+        >div{
+            width: 100%;
             float: left;
-            padding: 50px 0;
-            width: 30%;
-            height: 127px;
-            color: white;
-            .title{
-                text-align: center;
-                height: 20px;
-                line-height: 20px;
-                margin: 6px;
+            height: 146px;
+            line-height: 146px;
+            i{
+                font-size: 100px;
             }
-            .item{
-                width: 10px;
-                height: 28px;
-                line-height: 28px;
+        }
+        .active{
+            i{
+                color: red;
+                animation:flash 1s infinite linear;
             }
-            .label{
-                margin: 0 20px;
-                float: left;
-            }
-            .value{
-                float: left;
-            }
+        }
+    }
+    .angleInfo{
+        float: left;
+        padding: 20px 0;
+        width: 30%;
+        height: 146px;
+        color: white;
+        .title{
+            text-align: center;
+            height: 20px;
+            line-height: 20px;
+            margin: 6px;
+        }
+        .item{
+            height: 42px;
+            line-height: 42px;
+            font-size: 20px;
+        }
+        .label{
+            margin: 0 20px;
+            float: left;
+        }
+        .value{
+            float: left;
         }
     }
 }

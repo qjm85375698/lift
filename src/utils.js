@@ -4,8 +4,8 @@ const dqfwmsMap = [
     {key: 3, value: '检修'},
 ];
 const jxyxztMap = [
-    {key: 1, value: '运行'},
-    {key: 2, value: '停止'},
+    {key: '1', value: '运行'},
+    {key: '2', value: '停止'},
 ];
 const jxyxfxMap = [
     {key: 1, value: '无方向'},
@@ -13,10 +13,10 @@ const jxyxfxMap = [
     {key: 3, value: '下行'}
 ]
 const jmztMap = [
-    {key: 1, value: '开门到位'},
-    {key: 2, value: '关门到位'},
-    {key: 3, value: '正在开门'},
-    {key: 4, value: '不完全关闭'}
+    {key: '1', value: '开门到位'},
+    {key: '2', value: '关门到位'},
+    {key: '3', value: '正在开门'},
+    {key: '4', value: '不完全关闭'}
 ]
 export {
     dqfwmsMap,
