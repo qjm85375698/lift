@@ -183,7 +183,8 @@ export default {
             for (var x = 0; x < msgData.length; x++) {
                 Object.keys(this.liftData).forEach(key => {
                     if(msgData[x].code === key){
-                        if(msgData[x].code==='XJD'|| msgData[x].code==='YJD'|| msgData[x].code==='ZJD'){
+                        if(msgData[x].code==='XJD'|| msgData[x].code==='YJD'|| msgData[x].code==='ZJD'
+                        || msgData[x].code==='DQYL'|| msgData[x].code==='DQGD'|| msgData[x].code==='JXJDWD'){
                             this.liftData[key] = (msgData[x].value).toFixed(2) +msgData[x].unit;
                         
                         }else{
