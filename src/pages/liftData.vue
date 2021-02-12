@@ -66,7 +66,7 @@
                 </div>
                 <div class="direction">
                     <div v-if="liftData.JXYXFX === '0'" class="twoLine">
-                        <i class="iconfont icon-equals"></i>       
+                        <i class="iconfont icon-two-line"></i>       
                     </div>
                     <div v-if="liftData.JXYXFX === '1'" :class="[liftData.JXYXFX === '1'? 'active':'']"> 
                         <i class="iconfont icon-Up-"></i>
@@ -143,8 +143,8 @@ export default {
                 
                 // 实例化socket
                 //this.socket = new WebSocket("ws://134.175.201.123:8879/message");
-                // this.socket = new WebSocket("ws://134.175.201.123:8879/message");
-                this.socket = new WebSocket("ws://localhost:8081/message");
+                this.socket = new WebSocket("ws://134.175.201.123:8879/message");
+                // this.socket = new WebSocket("ws://localhost:8081/message");
                 //this.socket = new WebSocket("ws://10.100.30.130:8080/message");
                 // 监听socket连接
                 this.socket.onopen = this.open
@@ -243,7 +243,7 @@ export default {
     width: 768px;
     height: 436px;
     padding-bottom: 20px;
-    background-color:#12018B;
+    background-color:#1E0155;
     position: relative;
     overflow: hidden;
     .header {

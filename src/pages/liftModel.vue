@@ -205,7 +205,7 @@ export default {
     padding: 30px 0;
     width: 768px;
     // height: 456px;
-    background-color: #12018B;
+    background-color: #1E0155;
     // border-radius: 60px;
     position: relative;
     overflow: hidden;
@@ -452,7 +452,7 @@ export default {
                     z-index: 1;
                     height: 34px;
                     padding: 2px;
-                    background-color: #12018B;
+                    background-color: #090094;
                     border-radius: 10px;
                     color: white;
                     font-family: "led regular";
