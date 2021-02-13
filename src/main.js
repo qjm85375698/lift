@@ -6,7 +6,9 @@ import router from './router'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import './icon/iconfont.css';
+import echarts from 'echarts'
 
+Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false
 Vue.use(Element)
 
