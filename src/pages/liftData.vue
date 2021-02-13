@@ -21,8 +21,8 @@
                 <div class="importantInfo">
                     <div class="runInfo">
                         <div class="floor" v-if="liftData.DQFWMS === '1'">{{liftData.DQLC}}</div>
-                        <div class="stop" v-if="liftData.DQFWMS === '2'"><img src="@/assets/stop.png"> </div>
-                        <div class="check" v-if="liftData.DQFWMS === '3'"><img src="@/assets/check.png"> </div>
+                        <div class="stop" v-if="liftData.DQFWMS === '2'">停用<img src="@/assets/stop.png"> </div>
+                        <div class="check" v-if="liftData.DQFWMS === '3'">检修中<img src="@/assets/check.png"> </div>
                         
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                         <div>累计运行次数:</div>
                         <div>累计开门次数:</div>
                         <div>累计运行距离:</div>
-                        <div>钢丝折弯次数:</div>
+                        <div>钢绳折弯次数:</div>
                         <!-- <div>累计运行时间:</div> -->
                     </div>
                     <div class="value">
@@ -143,8 +143,8 @@ export default {
                 
                 // 实例化socket
                 //this.socket = new WebSocket("ws://134.175.201.123:8879/message");
-                this.socket = new WebSocket("ws://134.175.201.123:8879/message");
-                // this.socket = new WebSocket("ws://localhost:8081/message");
+                //this.socket = new WebSocket("ws://134.175.201.123:8879/message");
+                 this.socket = new WebSocket("ws://localhost:8080/message");
                 //this.socket = new WebSocket("ws://10.100.30.130:8080/message");
                 // 监听socket连接
                 this.socket.onopen = this.open
@@ -152,7 +152,7 @@ export default {
                 this.socket.onerror = this.error
                 // 监听socket消息
                 this.socket.onmessage = this.getMessage
-                //this.socket.onclose=this.close;
+                this.socket.onclose=this.close;
             }
         },
         open() {
@@ -244,7 +244,7 @@ export default {
     width: 768px;
     height: 436px;
     padding-bottom: 20px;
-    background-color:#1E0155;
+    background-color:#221157;
     position: relative;
     overflow: hidden;
     .header {
