@@ -1,7 +1,7 @@
 <template>
 <div id="app">
     <div>
-         <div id="main" :option="option" style="width:500px;height:500px" ref="chart"></div>
+         <div id="main"  style="width:100%;height:500px" ref="chart"></div>
     </div>
 </div>
 </template>
@@ -13,6 +13,7 @@ export default{
             socket: null,
             //myChart:'',
             panelData:'',
+            unit:'',
         }
     },
   created() {
@@ -84,6 +85,7 @@ export default{
                         // 这个会将所有的非字符变成字符
                         //console.log(this.panelData[key]+' ==== '+msgData[x].value);
                         this.panelData = msgData[x].value;
+                        this.unit =  msgData[x].unit;
                     }
         }
 
@@ -109,7 +111,7 @@ export default{
 　　initCharts () {
         //this.myChart = echarts.init(document.getElementById('main'));
     　　let myChart = this.$echarts.init(this.$refs.chart);
-        myChart.clear();
+        // myChart.clear();
     　　console.log(this.$refs.chart)
     　　// 绘制图表
     　　myChart.setOption({
@@ -125,11 +127,12 @@ export default{
                     },
                     data: [{
                         value: this.panelData,
-                        name: '氧气压力'
+                        name: '氧气压力( '+this.unit+' )',
                     }],
                     min:-100,
                     max: 1000,
-                    interval:150
+                    // interval:150,
+                    // splitNumber: 20,
                 }]
         　　});
 

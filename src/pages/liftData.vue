@@ -65,23 +65,52 @@
                     <div class="lineInner"></div>
                 </div>
                 <div class="direction">
+                    <div class="title">
+                        电梯健康指数
+                    </div>
                     <div v-if="liftData.JXYXFX === '0'" class="twoLine">
-                        <i class="iconfont icon-two-line"></i>       
+                        <!-- <i class="iconfont icon-two-line"></i>        -->
                     </div>
-                    <div v-if="liftData.JXYXFX === '1'" :class="[liftData.JXYXFX === '1'? 'active':'']"> 
-                        <i class="iconfont icon-Up-"></i>
+
+                    <div class="test">
+                        <div class="test1">
+
+                        </div>
+                        <div class="test2">
+
+                        </div>
+                        <div class="test3">
+
+                        </div>
+                        <div class="test4">
+
+                        </div>
+                        <div class="test5">
+
+                        </div>
+                    
                     </div>
-                    <div v-if="liftData.JXYXFX === '2'" :class="[liftData.JXYXFX === '2'? 'active':'']">
-                        <i class="iconfont icon-Down-"></i>
-                    </div>
+
                 </div>
                 <div class="line">
                     <div class="lineInner"></div>
                 </div>
                 <div class="angleInfo">
                     <div class="title">
-                        角度
+                        电梯姿态
                     </div>
+                    <div v-if="true" :class="[true? 'active':'']"> 
+                        <i class="iconfont icon-Up-"></i>
+                    </div>
+                    <!-- <div v-if="liftData.JXYXFX === '1'" :class="[liftData.JXYXFX === '1'? 'active':'']"> 
+                        <i class="iconfont icon-Up-"></i>
+                    </div>
+                    <div v-if="liftData.JXYXFX === '2'" :class="[liftData.JXYXFX === '2'? 'active':'']">
+                        <i class="iconfont icon-Down-"></i>
+                    </div> -->
+
+
+                    
                     <div class="item">
                         <div class="label">x:</div>
                         <div class="value" id="XJD">{{liftData.XJD}}</div>
@@ -143,8 +172,8 @@ export default {
                 
                 // 实例化socket
                 //this.socket = new WebSocket("ws://134.175.201.123:8879/message");
-                //this.socket = new WebSocket("ws://134.175.201.123:8879/message");
-                 this.socket = new WebSocket("ws://localhost:8080/message");
+                this.socket = new WebSocket("ws://134.175.201.123:8879/message");
+                //this.socket = new WebSocket("ws://localhost:8080/message");
                 //this.socket = new WebSocket("ws://10.100.30.130:8080/message");
                 // 监听socket连接
                 this.socket.onopen = this.open
@@ -412,6 +441,57 @@ export default {
                 font-size: 100px;
             }
         }
+        .test{
+            width: 188px;
+            height: 16px;
+            margin: -60px 0px 5px 10px;
+            border:3px solid white;
+
+
+            .test1{
+                width: 35px;
+                height: 13px;
+                margin: 0px 0spx 0px 0px;
+                border:2px solid red;
+                background-color: red;
+            };
+            .test2{
+                width: 35px;
+                height: 13px;
+                margin: -17px 0px 0px 38px;
+                border:2px solid #FF8000;
+                background-color:  #FF8000;
+                
+            };
+            .test3{
+                width: 38px;
+                height: 13px;
+                margin: -17px 0px 0px 76px;
+                border:2px solid yellow;
+                background-color: yellow;
+            };
+            .test4{
+                width: 35px;
+                height: 13px;
+                margin: -17px 0px 0px 116px;
+                border:2px solid #629700;
+                background-color: #629700;
+            };
+            .test5{
+                width: 33px;
+                height: 13px;
+                margin: -17px 0px 0px 153px;
+                border:2px solid rgb(12, 240, 50);
+                background-color: rgb(12, 240, 50);
+            };
+        }
+
+        .title{
+            text-align: center;
+            height: 20px;
+            line-height: 20px;
+            margin: 6px;
+        }
         .active{
             i{
                 color: red;
@@ -425,6 +505,15 @@ export default {
         width: 30%;
         height: 146px;
         color: white;
+        >div{
+            width: 100%;
+            float: left;
+            height: 6px;
+            line-height: 16px;
+            i{
+                font-size: 50px;
+            }
+        }
         .title{
             text-align: center;
             height: 20px;
@@ -432,8 +521,9 @@ export default {
             margin: 6px;
         }
         .item{
-            height: 42px;
-            line-height: 42px;
+            margin-left:100px;
+            height: 30px;
+            line-height: 30px;
             font-size: 20px;
         }
         .label{
@@ -442,6 +532,13 @@ export default {
         }
         .value{
             float: left;
+        }
+        .active{
+            i{
+
+                color: red;
+                animation:flash 1s infinite linear;
+            }
         }
     }
 }
