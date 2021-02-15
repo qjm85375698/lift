@@ -138,15 +138,15 @@
                             <div class="itemGroup">
                                 <div class="item">
                                     <div class="label">X:</div>
-                                    <div class="value" id="XJD">{{liftData.XJD}}</div>
+                                    <div class="value" id="XJD">{{liftData.XJD}}°</div>
                                 </div>
                                 <div class="item">
                                     <div class="label">Y:</div>
-                                    <div class="value" id="YJD">{{liftData.YJD}}</div>
+                                    <div class="value" id="YJD">{{liftData.YJD}}°</div>
                                 </div>
                                 <div class="item">
                                     <div class="label">Z:</div>
-                                    <div class="value" id="ZJD">{{liftData.ZJD}}</div>
+                                    <div class="value" id="ZJD">{{liftData.ZJD}}°</div>
                                 </div>
                             </div>
                         </div>
@@ -553,7 +553,7 @@ export default {
                     if(msgData[x].code === key){
 
                         if(msgData[x].code==='XJD'|| msgData[x].code==='YJD'|| msgData[x].code==='ZJD'){
-                            this.liftData[key] = (msgData[x].value).toFixed(2);
+                            this.liftData[key] = (msgData[x].value).toFixed(2) +msgData[x].unit;
 
                         }
                         if( msgData[x].code==='DQYL'|| msgData[x].code==='DQGD'|| msgData[x].code==='JXJDWD'){
@@ -958,14 +958,19 @@ export default {
                     }
                 }
                 .item{
-                    height: 30px;
-                    line-height: 30px;
+                    margin-left:35px;
+                    margin-top:10px;
+                    height: 10px;
+                    line-height: 10px;
                     font-size: 20px;
+                }
+                .itemGroup{
+                    margin-top:20px;
                 }
             }
         }
         .label{
-            margin: 0 3px;
+            margin: 10 20px;
             float: left;
         }
         .value{
