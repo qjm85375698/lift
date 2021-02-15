@@ -1,4 +1,5 @@
 <template>
+<div class="body">
     <div class="liftData">
         <div class='header'>电梯运行状态</div>
         <div class='infoBox'>
@@ -31,17 +32,17 @@
                 </div>
                 <div class="historyInfo">
                     <div class='label'>
-                        <div>累计运行次数:</div>
-                        <div>累计开门次数:</div>
-                        <div>累计运行距离:</div>
-                        <div>钢绳折弯次数:</div>
+                        <div>电梯运行:</div>
+                        <div>电梯开门:</div>
+                        <div>运行距离:</div>
+                        <div>折弯次数:</div>
                         <!-- <div>累计运行时间:</div> -->
                     </div>
                     <div class="value">
-                        <div id="LJYXCS">{{liftData.LJYXCS}}</div>
-                        <div id="KMCS">{{liftData.KMCS}}</div>
-                        <div id="LJYXJL">{{liftData.LJYXJL}}</div>
-                        <div id="GSWZCS">{{liftData.GSWZCS}}</div>
+                        <div id="LJYXCS" class="svalue">{{liftData.LJYXCS}}</div>
+                        <div id="KMCS" class="svalue">{{liftData.KMCS}}</div>
+                        <div id="LJYXJL" class="svalue">{{liftData.LJYXJL}}</div>
+                        <div id="GSWZCS" class="svalue">{{liftData.GSWZCS}}</div>
                         <!-- <div id="DTLJYXSJ">{{liftData.DTLJYXSJ}}</div> -->
                     </div>
                 </div>
@@ -68,11 +69,10 @@
                     <div class="title">
                         电梯健康指数
                     </div>
-                    <div v-if="liftData.JXYXFX === '0'" class="twoLine">
-                        <!-- <i class="iconfont icon-two-line"></i>        -->
-                    </div>
+                    <div class='healthChart' ref="healthChart">
 
-                    <div class="test">
+                    </div>
+                    <!-- <div class="test">
                         <div class="test1">
 
                         </div>
@@ -90,7 +90,23 @@
                         </div>
                     
                     </div>
-
+                    <div class="healthDescribe">
+                        <div class="desc1">
+                            很差
+                        </div>
+                        <div class="desc2">
+                            较差
+                        </div>
+                        <div class="desc3">
+                            正常
+                        </div>
+                        <div class="desc4">
+                            良好
+                        </div>
+                        <div class="desc5">
+                            很好
+                        </div>
+                    </div> -->
                 </div>
                 <div class="line">
                     <div class="lineInner"></div>
@@ -127,13 +143,16 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 <script>
 import {jxyxztMap, jmztMap} from '@/utils';
+import echarts from 'echarts';
 export default {
     name: 'liftData',
     data() {
         return {
+            HEALTH_POINT:'',//健康指数,
             liftData: {
                 DQFWMS: '1', // 当前服务模式
                 JXYXZT: '运行', // 轿厢运行状态
@@ -151,7 +170,8 @@ export default {
                 YJD: '0°', // Y角度
                 ZJD: '0°', // Z角度
                 DTLJYXSJ: '100s', // 累计运行时间
-                JXJDWD: '25℃' // 轿厢温度
+                JXJDWD: '25℃', // 轿厢温度
+                
             },
             socket: null            
         }
@@ -159,11 +179,309 @@ export default {
     created() {
         this.initSocket();
     },
+    mounted() {
+        this.initCharts();
+    },
     destroyed () {
         // 销毁监听
         this.socket.onclose = this.close
     },
+    //在Chart.vue中加入watch
+  watch:{
+    //观察option的变化
+    HEALTH_POINT(msg){
+      this.initCharts();
+    }
+
+  },
     methods: {
+        initCharts() {
+        　　let healthChart = this.$echarts.init(this.$refs.healthChart);
+            healthChart.setOption({
+                backgroundColor: '#221157',
+                // title: [{
+                //     show: false,
+                //     x: "10%",
+                //     y: "13%",
+                //     text: '主干道平均车速:36km/h',
+                //     textStyle: {
+                //         fontWeight: 'normal',
+                //         fontSize: 2,
+                //         color: "#fff"
+                //     },
+                // }],
+                series: [
+                    {
+                        name: "",
+                        type: 'gauge',
+                        min: 0,
+                        max: 100,
+                        radius: "150%",
+                        splitNumber: 1, //刻度数量
+                        startAngle: 180,
+                        endAngle: 0,
+                        center:['50%','90%'],
+                        axisLine: { // 坐标轴线
+                            lineStyle: { // 属性lineStyle控制线条样式
+                                width: 20,
+                                color: [
+                                    [1, new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                                        offset: 0,
+                                        color: '#f70700'
+                                    }, {
+                                        offset: 1,
+                                        color: '#3aa600'
+                                    }])]
+                                ],
+                            }
+                        },
+                        splitLine: {
+                            show: false,
+                        },
+                        axisLabel: {
+                            show: true,
+                            color: "#fff",
+                            formatter: "{value}",
+                            distance: 10,
+                            padding: [0, -16, 0, -16],
+                            fontSize: 12
+                            
+                        },
+
+                        axisTick: {
+                            show: false
+                        },
+                        pointer: {
+                            show: true,
+                            length: '82%',
+                            width: 2,
+                        },
+                        itemStyle: {
+                            color: '#0782f9'
+                        },
+                        title: {
+                            show: false,
+                        },
+                        detail: {
+                            show: false,
+                            offsetCenter: [0, '-35%'],
+                            textStyle: {
+                                color: '#8bd100',
+                                fontSize: 48,
+                                fontWeight: 500
+                            }
+                        },
+                        data: [{
+                            show: false,
+                            value: this.HEALTH_POINT, //指针数值
+                        }]
+
+                    },
+                    {
+                        name: '拥堵程度',
+                        type: 'gauge',
+                        min: 0,
+                        max: 100,
+                        splitNumber: 25,
+                        startAngle: 0,
+                        endAngle: 180,
+                        radius: '180%',
+                        center: ['50%', '90%'],
+                        axisLine: {
+                            show: false,
+                            lineStyle: {
+                                width: 0
+                            }
+                        },
+                        axisTick: {
+                            show: false,
+                        },
+                        axisLabel: {
+                            color: '#ffffff',
+                            fontSize: 8,
+                            rotate: '40',
+                            formatter: function(e) {
+                                switch (e + "") {
+                                    case "8":
+                                        return "很";
+                                    case "12":
+                                        return "差";
+                                    case "24":
+                                        return "";
+                                    case "28":
+                                        return "较";
+                                    case "32":
+                                        return "差";
+                                    case "36":
+                                        return "";
+                                    case "44":
+                                        return "";
+                                    case "48":
+                                        return "正";
+                                    case "52":
+                                        return "常";
+                                    case "56":
+                                        return "";
+                                    case "64":
+                                        return "";
+                                    case "68":
+                                        return "良";
+                                    case "72":
+                                        return "好";
+                                    case "76":
+                                        return "";
+                                    case "84":
+                                        return "";
+                                    case "88":
+                                        return "很";
+                                    case "92":
+                                        return "好";
+                                    case "96":
+                                        return "";
+                                }
+                            },
+                        },
+                        splitLine: { // 分隔线
+                            show: false,
+                            length: 19,
+                            lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
+                                color: 'blue',
+                                width: 1
+                            }
+
+                        },
+                        detail: {
+                            show: false,
+                        },
+                        data: [],
+                        clockwise: false
+                    },
+                    {
+                        name: '刻度',
+                        type: 'gauge',
+                        radius: "150%",
+                        startAngle: 144,
+                        endAngle: 36,
+                        center: ['50%', '90%'],
+                        min: 20,
+                        max: 80,
+                        splitNumber: 3,
+                        axisLine: { // 坐标轴线
+                            lineStyle: { // 属性lineStyle控制线条样式
+                                width: 60,
+                                color: [
+                                    [1, 'rgba(0,0,0,0)']
+                                ]
+                            }
+                        },
+                        axisLabel: {
+                            show: true,
+                            fontSize: 12,
+                            color: '#ffffff'
+                        },
+                        axisTick: {
+                            show: false,
+                            splitNumber: 10,
+                            lineStyle: {
+                                color: '#707070', //用颜色渐变函数不起作用
+                                width: 1
+                            },
+                            length: -10
+                        },
+                        splitLine: {
+                            show: true, //改１
+                            length: 22,
+                            lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
+                                color: '#ffffff',
+                                width: 1
+                            }
+                        },
+                        pointer: {
+                            show: false
+                        }
+                    },
+                    {
+                        "name": '指针小圆形', //装饰作用
+                        "type": 'pie',
+                        "hoverAnimation": false,
+                        "legendHoverLink": false,
+                        "radius": ['0%', '1%'],
+                        "center": ['50%', '50%'],
+                        "z": 10,
+                        "label": {
+                            "normal": {
+                                "show": false,
+                                "position": 'center'
+                            },
+                            "emphasis": {
+                                "show": false
+                            }
+                        },
+                        "labelLine": {
+                            "normal": {
+                                "show": false
+                            }
+                        },
+                        "data": [{
+                            "value": 0,
+                            "name": '1',
+                            itemStyle: {
+                                normal: {
+                                    color: "red"
+                                }
+                            }
+                        }, {
+                            "value": 100,
+                            "name": '2',
+                            itemStyle: {
+                                normal: {
+                                    color: "#0782f9"
+                                },
+                                emphasis: {
+                                    color: "#0782f9"
+                                }
+                            }
+                        }]
+                    },
+                    {
+                        name: '',
+                        type: 'gauge',
+                        z: 100,
+                        min: 0,
+                        max: 100,
+                        splitNumber: 5,
+                        startAngle: 0,
+                        endAngle: 180,
+                        center:['50%','90%'],
+                        radius: '170%',
+                        axisLine: { // 坐标轴线
+                            lineStyle: { // 属性lineStyle控制线条样式
+                                width: 4,
+                                color: [
+                                    [1, '#0666c9']
+                                ],
+                                opacity: 1
+                            }
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            show: false,
+                        },
+                        splitLine: { // 分隔线
+                            show: false,
+                            length: 15,
+                        },
+                        detail: {
+                            show: false,
+                        },
+                        data: [],
+                        clockwise: false
+                    }
+                ]
+            });
+        },
         initSocket() {
             if(typeof(WebSocket) === "undefined"){
                   alert("您的浏览器不支持socket")
@@ -172,8 +490,8 @@ export default {
                 
                 // 实例化socket
                 //this.socket = new WebSocket("ws://134.175.201.123:8879/message");
-                this.socket = new WebSocket("ws://134.175.201.123:8879/message");
-                //this.socket = new WebSocket("ws://localhost:8080/message");
+                // this.socket = new WebSocket("ws://134.175.201.123:8879/message");
+                this.socket = new WebSocket("ws://localhost:8080/message");
                 //this.socket = new WebSocket("ws://10.100.30.130:8080/message");
                 // 监听socket连接
                 this.socket.onopen = this.open
@@ -249,6 +567,11 @@ export default {
                     }
                     
                 }
+                //HEALTH_POINT
+                if (msgData[x].code==='HEALTH_POINT') {
+                    this.HEALTH_POINT = msgData[x].value;
+                }
+
             }
         },    
         send(msg) {
@@ -269,6 +592,12 @@ export default {
 }
 </script>
 <style lang="less">
+// div {font-family: Arial, sans-serif;}
+// .div{ font-family:'Microsoft YaHei' !important;}
+.body{
+    // font-family:"\5FAE\8F6F\96C5\9ED1 !important";
+    font-family: '微软雅黑' ! important;
+}
 .liftData{
     width: 768px;
     height: 436px;
@@ -283,6 +612,7 @@ export default {
         line-height: 50px;
         color: white;
         font-size: 20px;
+        font-family: '微软雅黑' ! important;
     }
     .infoBox{
         height: 376px;
@@ -306,6 +636,7 @@ export default {
             width: 30%;
             padding: 20px 0;
             .label{
+                font-family: '微软雅黑  !important';
                 width: 20%;
                 float: left;
                 i{
@@ -320,6 +651,7 @@ export default {
                 width: 80%;
                 float: left;
                 font-size: 28px;
+                // font-family:'Microsoft YaHei' !important;
                 &>div{
                     height: 49px;
                     line-height: 49px;
@@ -359,17 +691,23 @@ export default {
             height: 146px;
             width: 30%;
             .label{
-                width: 70%;
+                width: 50%;
                 float: left;
                 &>div{
                     font-size: 20px;
                     text-align: left;
                     height: 36px;
                     line-height: 36px;
+                };
+                .slabel{
+                    font-size: 14px;
+                    text-align: left;
+                    height: 36px;
+                    line-height: 36px;
                 }
             }
             .value{
-                width: 30%;
+                width: 50%;
                 float: left;
                 &>div{
                     font-size: 20px;
@@ -432,26 +770,25 @@ export default {
         height: 146px;
         width: 30%;
         padding: 20px 0;
-        >div{
-            width: 100%;
-            float: left;
-            height: 146px;
-            line-height: 146px;
-            i{
-                font-size: 100px;
-            }
+        position: relative;
+        .title{
+            height: 26px;
+            line-height: 26px;
+        }
+        .healthChart{
+            height: 120px;
         }
         .test{
             width: 188px;
             height: 16px;
-            margin: -60px 0px 5px 10px;
-            border:3px solid white;
+            margin: -10px 0px 5px 10px;
+            border:1px solid white;
 
 
             .test1{
                 width: 35px;
                 height: 13px;
-                margin: 0px 0spx 0px 0px;
+                margin: 0px 0px 0px -1px;
                 border:2px solid red;
                 background-color: red;
             };
@@ -485,18 +822,52 @@ export default {
                 background-color: rgb(12, 240, 50);
             };
         }
-
-        .title{
-            text-align: center;
-            height: 20px;
-            line-height: 20px;
-            margin: 6px;
-        }
-        .active{
-            i{
-                color: red;
-                animation:flash 1s infinite linear;
-            }
+        .healthDescribe{
+            width: 189px;
+            height: 12px;
+            margin: -5px 0px 5px 10px;
+            // border:1px solid white;
+            .desc1{
+                font-size: 5px;
+                width: 35px;
+                height: 13px;
+                margin: -7px 0px 0px -1px;
+                // border:2px solid red;
+                // background-color: red;
+            };
+            .desc2{
+                font-size: 5px;
+                width: 35px;
+                height: 13px;
+                margin: -12px 0px 0px 38px;
+                // border:2px solid #FF8000;
+                // background-color:  #FF8000;
+                
+            };
+            .desc3{
+                font-size: 5px;
+                width: 38px;
+                height: 13px;
+                margin: -13px 0px 0px 76px;
+                // border:2px solid yellow;
+                // background-color: yellow;
+            };
+            .desc4{
+                font-size: 5px;
+                width: 35px;
+                height: 13px;
+                margin: -13px 0px 0px 116px;
+                // border:2px solid #629700;
+                // background-color: #629700;
+            };
+            .desc5{
+                font-size: 5px;
+                width: 33px;
+                height: 13px;
+                margin: -13px 0px 0px 153px;
+                // border:2px solid rgb(12, 240, 50);
+                // background-color: rgb(12, 240, 50);
+            };
         }
     }
     .angleInfo{
