@@ -72,7 +72,7 @@
                     <div class='healthChart' ref="healthChart">
 
                     </div>
-                    <!-- <div class="test">
+                    <div class="test">
                         <div class="test1">
 
                         </div>
@@ -106,7 +106,7 @@
                         <div class="desc5">
                             很好
                         </div>
-                    </div> -->
+                    </div>
                 </div>
                 <div class="line">
                     <div class="lineInner"></div>
@@ -115,8 +115,41 @@
                     <div class="title">
                         电梯姿态
                     </div>
-                    <div v-if="true" :class="[true? 'active':'']"> 
-                        <i class="iconfont icon-Up-"></i>
+                    <div class="content">
+                        <div class="left" :style="{'color': 'red'}">
+                            <div id="zfxBox"
+                                class="box" 
+                                :style="{'transform': 'rotateX('+this.liftData.XJD+'deg) rotateY('+this.liftData.YJD+'deg) rotateZ('+this.liftData.ZJD+'deg)'}"
+                            >
+                                <div class="surface"></div>
+                                <div class="surface"></div>
+                                <div class="surface"></div>
+                                <div class="surface"></div>
+                                <div class="surface"></div>
+                                <div class="surface"></div>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="directionIcon">
+                                <div v-if="true" :class="[true? 'active':'']"> 
+                                    <i class="iconfont icon-Up-"></i>
+                                </div>
+                            </div>
+                            <div class="itemGroup">
+                                <div class="item">
+                                    <div class="label">X:</div>
+                                    <div class="value" id="XJD">{{liftData.XJD}}</div>
+                                </div>
+                                <div class="item">
+                                    <div class="label">Y:</div>
+                                    <div class="value" id="YJD">{{liftData.YJD}}</div>
+                                </div>
+                                <div class="item">
+                                    <div class="label">Z:</div>
+                                    <div class="value" id="ZJD">{{liftData.ZJD}}</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- <div v-if="liftData.JXYXFX === '1'" :class="[liftData.JXYXFX === '1'? 'active':'']"> 
                         <i class="iconfont icon-Up-"></i>
@@ -127,18 +160,6 @@
 
 
                     
-                    <div class="item">
-                        <div class="label">x:</div>
-                        <div class="value" id="XJD">{{liftData.XJD}}</div>
-                    </div>
-                    <div class="item">
-                        <div class="label">y:</div>
-                        <div class="value" id="YJD">{{liftData.YJD}}</div>
-                    </div>
-                    <div class="item">
-                        <div class="label">z:</div>
-                        <div class="value" id="ZJD">{{liftData.ZJD}}</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -244,7 +265,7 @@ export default {
                             formatter: "{value}",
                             distance: 10,
                             padding: [0, -16, 0, -16],
-                            fontSize: 12
+                            fontSize: 10
                             
                         },
 
@@ -263,11 +284,11 @@ export default {
                             show: false,
                         },
                         detail: {
-                            show: false,
+                            show: true,
                             offsetCenter: [0, '-35%'],
                             textStyle: {
                                 color: '#8bd100',
-                                fontSize: 48,
+                                fontSize: 20,
                                 fontWeight: 500
                             }
                         },
@@ -303,39 +324,39 @@ export default {
                             formatter: function(e) {
                                 switch (e + "") {
                                     case "8":
-                                        return "很";
+                                        return "";
                                     case "12":
-                                        return "差";
+                                        return "";
                                     case "24":
                                         return "";
                                     case "28":
-                                        return "较";
+                                        return "";
                                     case "32":
-                                        return "差";
+                                        return "";
                                     case "36":
                                         return "";
                                     case "44":
                                         return "";
                                     case "48":
-                                        return "正";
+                                        return "";
                                     case "52":
-                                        return "常";
+                                        return "";
                                     case "56":
                                         return "";
                                     case "64":
                                         return "";
                                     case "68":
-                                        return "良";
+                                        return "";
                                     case "72":
-                                        return "好";
+                                        return "";
                                     case "76":
                                         return "";
                                     case "84":
                                         return "";
                                     case "88":
-                                        return "很";
+                                        return "";
                                     case "92":
-                                        return "好";
+                                        return "";
                                     case "96":
                                         return "";
                                 }
@@ -376,7 +397,7 @@ export default {
                         },
                         axisLabel: {
                             show: true,
-                            fontSize: 12,
+                            fontSize: 10,
                             color: '#ffffff'
                         },
                         axisTick: {
@@ -530,8 +551,12 @@ export default {
             for (var x = 0; x < msgData.length; x++) {
                 Object.keys(this.liftData).forEach(key => {
                     if(msgData[x].code === key){
-                        if(msgData[x].code==='XJD'|| msgData[x].code==='YJD'|| msgData[x].code==='ZJD'
-                        || msgData[x].code==='DQYL'|| msgData[x].code==='DQGD'|| msgData[x].code==='JXJDWD'){
+
+                        if(msgData[x].code==='XJD'|| msgData[x].code==='YJD'|| msgData[x].code==='ZJD'){
+                            this.liftData[key] = (msgData[x].value).toFixed(2);
+
+                        }
+                        if( msgData[x].code==='DQYL'|| msgData[x].code==='DQGD'|| msgData[x].code==='JXJDWD'){
                             this.liftData[key] = (msgData[x].value).toFixed(2) +msgData[x].unit;
                         
                         }else{
@@ -679,8 +704,8 @@ export default {
                     margin: 0 auto;
                     animation: flash 1s infinite linear;
                     img{
-                        width: 100%;
-                        height: 100%;
+                        width: 80%;
+                        height: 80%;
                     }
                 }
             }
@@ -876,29 +901,71 @@ export default {
         width: 30%;
         height: 146px;
         color: white;
-        >div{
-            width: 100%;
-            float: left;
-            height: 6px;
-            line-height: 16px;
-            i{
-                font-size: 50px;
+        .title{
+            text-align: left;
+            height: 26px;
+            line-height: 26px;
+        }
+        .content{
+            height: 120px;
+            .left,.right{
+                height: 100%;
+                width: 50%;
+                float:left;
+            }
+            .left{
+                padding-top: 30px;
+                .box{
+                    margin: 0 auto;
+                    width: 62px;
+                    height: 62px;
+                    position: relative;
+                    transform-style: preserve-3d;
+                    .surface{
+                        width: 60px;
+                        height: 60px;
+                        border: 1px solid white;
+                        position: absolute;
+                        text-align: center;
+                        line-height: 60px;
+                        &:nth-child(1){
+                            transform:rotateX(90deg)  translateZ(30px);
+                        }
+                        &:nth-child(2){
+                            transform:rotateX(270deg) translateZ(30px);
+                        }
+                        &:nth-child(3){
+                            transform:rotateY(90deg) translateZ(30px);
+                        }
+                        &:nth-child(4){
+                            transform:rotateY(270deg) translateZ(30px);
+                        }
+                        &:nth-child(5){
+                            transform:translateZ(-30px);
+                        }
+                        &:nth-child(6){
+                            transform: translateZ(30px) ;
+                        }
+                    }
+                }
+            }
+            .right{
+                .directionIcon{
+                    height: 30px;
+                    line-height: 30px;
+                    i{
+                        font-size: 24px;
+                    }
+                }
+                .item{
+                    height: 30px;
+                    line-height: 30px;
+                    font-size: 20px;
+                }
             }
         }
-        .title{
-            text-align: center;
-            height: 20px;
-            line-height: 20px;
-            margin: 6px;
-        }
-        .item{
-            margin-left:100px;
-            height: 30px;
-            line-height: 30px;
-            font-size: 20px;
-        }
         .label{
-            margin: 0 20px;
+            margin: 0 3px;
             float: left;
         }
         .value{
