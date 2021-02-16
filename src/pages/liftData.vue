@@ -67,7 +67,7 @@
                 </div>
                 <div class="direction">
                     <div class="title">
-                        电梯健康指数
+                        健康指数
                     </div>
                     <div class='healthChart' ref="healthChart">
 
@@ -131,9 +131,16 @@
                         </div>
                         <div class="right">
                             <div class="directionIcon">
-                                <div v-if="true" :class="[true? 'active':'']"> 
+                                <!-- <div v-if="true" :class="[true? 'active':'']"> 
+                                    <i class="iconfont icon-Up-"></i>
+                                </div> -->
+                                <div v-if="liftData.JXYXFX === '1'" :class="[liftData.JXYXFX === '1'? 'active':'']"> 
                                     <i class="iconfont icon-Up-"></i>
                                 </div>
+                                <div v-if="liftData.JXYXFX === '2'" :class="[liftData.JXYXFX === '2'? 'active':'']">
+                                    <i class="iconfont icon-Down-"></i>
+                                </div>
+
                             </div>
                             <div class="itemGroup">
                                 <div class="item">
@@ -151,12 +158,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div v-if="liftData.JXYXFX === '1'" :class="[liftData.JXYXFX === '1'? 'active':'']"> 
-                        <i class="iconfont icon-Up-"></i>
-                    </div>
-                    <div v-if="liftData.JXYXFX === '2'" :class="[liftData.JXYXFX === '2'? 'active':'']">
-                        <i class="iconfont icon-Down-"></i>
-                    </div> -->
+
 
 
                     
@@ -511,8 +513,8 @@ export default {
                 
                 // 实例化socket
                 //this.socket = new WebSocket("ws://134.175.201.123:8879/message");
-                // this.socket = new WebSocket("ws://134.175.201.123:8879/message");
-                this.socket = new WebSocket("ws://localhost:8080/message");
+                this.socket = new WebSocket("ws://134.175.201.123:8879/message");
+                // this.socket = new WebSocket("ws://localhost:8080/message");
                 //this.socket = new WebSocket("ws://10.100.30.130:8080/message");
                 // 监听socket连接
                 this.socket.onopen = this.open
@@ -553,12 +555,12 @@ export default {
                     if(msgData[x].code === key){
 
                         if(msgData[x].code==='XJD'|| msgData[x].code==='YJD'|| msgData[x].code==='ZJD'){
-                            this.liftData[key] = (msgData[x].value).toFixed(2) +msgData[x].unit;
-
+                            this.liftData[key] = (msgData[x].value).toFixed(2);
+                            return;
                         }
                         if( msgData[x].code==='DQYL'|| msgData[x].code==='DQGD'|| msgData[x].code==='JXJDWD'){
                             this.liftData[key] = (msgData[x].value).toFixed(2) +msgData[x].unit;
-                        
+                            return;
                         }else{
                             // 这个会将所有的非字符变成字符
                             this.liftData[key] = msgData[x].value + (msgData[x].unit? msgData[x].unit: '');
@@ -797,8 +799,8 @@ export default {
         padding: 20px 0;
         position: relative;
         .title{
-            height: 26px;
-            line-height: 26px;
+            height: 15px;
+            line-height: 12px;
         }
         .healthChart{
             height: 120px;
@@ -861,7 +863,7 @@ export default {
                 // background-color: red;
             };
             .desc2{
-                font-size: 5px;
+                font-size: 1px;
                 width: 35px;
                 height: 13px;
                 margin: -12px 0px 0px 38px;
@@ -904,7 +906,7 @@ export default {
         .title{
             text-align: left;
             height: 26px;
-            line-height: 26px;
+            line-height: 13px;
         }
         .content{
             height: 120px;
@@ -958,10 +960,10 @@ export default {
                     }
                 }
                 .item{
-                    margin-left:35px;
+                    margin-left:5px;
                     margin-top:10px;
-                    height: 10px;
-                    line-height: 10px;
+                    height: 20px;
+                    line-height: 20px;
                     font-size: 20px;
                 }
                 .itemGroup{
@@ -970,10 +972,11 @@ export default {
             }
         }
         .label{
-            margin: 10 20px;
+            margin: 0px -2px;
             float: left;
         }
         .value{
+            margin-left:2px;
             float: left;
         }
         .active{
