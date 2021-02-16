@@ -119,7 +119,7 @@
                         <div class="left" :style="{'color': 'red'}">
                             <div id="zfxBox"
                                 class="box" 
-                                :style="{'transform': 'rotateX('+this.liftData.XJD+'deg) rotateY('+this.liftData.YJD+'deg) rotateZ('+this.liftData.ZJD+'deg)'}"
+                                :style="{'transform': 'rotateX('+this.liftData.XJD+'deg) rotateZ('+this.liftData.YJD+'deg) rotateY('+this.liftData.ZJD+'deg)'}"
                             >
                                 <div class="surface"></div>
                                 <div class="surface"></div>
@@ -189,9 +189,9 @@ export default {
                 DQYL: '101.32kpa', // 最大压力
                 DQGD: '260cm', // 当前高度
                 DQSD: '20m/s', // 当前速度
-                XJD: '0°', // X角度
-                YJD: '0°', // Y角度
-                ZJD: '0°', // Z角度
+                XJD: '0', // X角度
+                YJD: '0', // Y角度
+                ZJD: '0', // Z角度
                 DTLJYXSJ: '100s', // 累计运行时间
                 JXJDWD: '25℃', // 轿厢温度
                 
@@ -512,7 +512,6 @@ export default {
                 //console.log("device_id:"+device_id);
                 
                 // 实例化socket
-                //this.socket = new WebSocket("ws://134.175.201.123:8879/message");
                 this.socket = new WebSocket("ws://134.175.201.123:8879/message");
                 // this.socket = new WebSocket("ws://localhost:8080/message");
                 //this.socket = new WebSocket("ws://10.100.30.130:8080/message");
@@ -718,7 +717,7 @@ export default {
             height: 146px;
             width: 30%;
             .label{
-                width: 50%;
+                width:43%;
                 float: left;
                 &>div{
                     font-size: 20px;
@@ -922,30 +921,39 @@ export default {
                     width: 62px;
                     height: 62px;
                     position: relative;
+                    -webkit-transform-style: preserve-3d;
                     transform-style: preserve-3d;
+                    -webkit-perspective: 400px;
+                    perspective : 400px;
                     .surface{
                         width: 60px;
                         height: 60px;
-                        border: 1px solid white;
+                        border: 2px solid white;
                         position: absolute;
                         text-align: center;
                         line-height: 60px;
                         &:nth-child(1){
+                            background: radial-gradient(transparent 0%, rgba(109, 107, 107, 0.2) 100%);
                             transform:rotateX(90deg)  translateZ(30px);
                         }
                         &:nth-child(2){
+                            background: radial-gradient(transparent 0%, rgba(109, 107, 107, 0.2) 100%);
                             transform:rotateX(270deg) translateZ(30px);
                         }
                         &:nth-child(3){
+                            background: radial-gradient(transparent 0%, rgba(109, 107, 107, 0.2) 100%);
                             transform:rotateY(90deg) translateZ(30px);
                         }
                         &:nth-child(4){
+                            background: radial-gradient(transparent 0%, rgba(109, 107, 107, 0.2) 100%);
                             transform:rotateY(270deg) translateZ(30px);
                         }
                         &:nth-child(5){
+                            background: radial-gradient(transparent 0%, rgba(109, 107, 107, 0.2) 100%);
                             transform:translateZ(-30px);
                         }
                         &:nth-child(6){
+                            background: radial-gradient(transparent 0%, rgba(109, 107, 107, 0.2) 100%);
                             transform: translateZ(30px) ;
                         }
                     }
